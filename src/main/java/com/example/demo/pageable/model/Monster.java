@@ -5,11 +5,15 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -18,28 +22,30 @@ public class Monster {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Long ID;
+	@Column(name="id")
+	private Long id;
 	
-	@Column
+	@Column(name="name",length = 20, unique = true, nullable = false)
 	private String name;
 	
-	@Column
+	@Column(name="color", nullable = false)
 	private String color;
 	
-	@Column
-	private String height;
+	@Column(name="height", nullable = false)
+	@Digits(integer = 3, fraction = 2)
+	private Double height;
 	
-	@Column
-	private String weught;
+	@Column(name="weight", nullable = false)
+	@Digits(integer = 3, fraction = 2)
+	private Double weight;
 	
-	@Column
+	@Column(name="maxMp", nullable = false)
 	private String maxMp;
 	
-	@Column
+	@Column(name="mp")
 	private String mp;
 	
-	@OneToMany(mappedBy ="monster",cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy ="monster",cascade = CascadeType.ALL)
 	private List<Move> moves;
 	
 	

@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.Data;
+
 @Data
 @Entity
 @Table
@@ -18,23 +20,24 @@ public class Move {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Long ID;
+	@Column(name="id")
+	private Long id;
 	
-	@Column
+	@Column(name="name",length = 20, unique = true, nullable = false)
 	private String moveName;
 	
-	@Column
-	private String mpConsume;
+	@Column(name="mpConsume", nullable = false)
+	private Integer mpConsume;
 	
-	@Column
-	private String attackPower;
+	@Column(name="attackPower", nullable = false)
+	private Integer attackPower;
 	
 	@Transient
-	private Integer fk_MonsterId;
+	@Column(name="fk_monsterId")
+	private Integer fk_monsterId;
 	
+	@JoinColumn(name="fk_monsterId")
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn
 	private Monster monster;
 
 }
